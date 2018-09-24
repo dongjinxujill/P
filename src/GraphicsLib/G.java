@@ -21,6 +21,9 @@ public class G {
         }
         public void add(V v){this.x += v.x; this.y += v.y;}
 
+        public void set(V v){this.x = v.x; this.y = v.y;}
+        public void set(int x, int y){this.x = x; this.y = y;}
+
     }
     public static class VS{
         public V loc, size;
@@ -31,6 +34,12 @@ public class G {
         // hit detection, whether one mouse event is within a specific rec
         public boolean hit(int x, int y){return loc.x <= x && loc.y <= y && x <= (loc.x + size.x) && y <= (loc.y + size.y);}
         public void resize(int x, int y){ size.x = x; size.y = y;}
+        public int lox(){return loc.x;};
+        public int midx() {return loc.x + size.x/2;};
+        public int hix() { return loc.x + size.x;};
+        public int loy() {return loc.y;};
+        public int midy() {return loc.y + size.y/2;};
+        public int hiy() { return loc.y + size.y;};
 
     }
     // pair of integers one low one high represents range of values.

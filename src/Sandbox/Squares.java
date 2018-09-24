@@ -1,6 +1,8 @@
 package Sandbox;
 
 import GraphicsLib.G;
+import GraphicsLib.UC;
+import GraphicsLib.I;
 import GraphicsLib.Window;
 
 import javax.swing.*;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 public class Squares extends Window implements ActionListener {
 
     public Squares() {
-        super("Squares", 1000, 800);
+        super("Squares", UC.screenWidth, UC.screenHeight);
         timer  = new Timer(33,  this);
         timer.setInitialDelay(5000);
         timer.start();
@@ -24,8 +26,36 @@ public class Squares extends Window implements ActionListener {
     public static G.VS theVS =  new G.VS(100, 100, 200, 300);
     public static Color theColor = G.rndColor();
     public static Square theSquare = new Square(200, 328);
+
+    public static Square backgroundSquare = new Square(0, 0){
+      @Override
+      public void pressed(int x, int y){
+          theList.add(new Square(x, y));
+      }
+      public void dragged(int x, int y){
+          Square s = theList.get(theList.size() - 1);
+          int w = Math.abs(x - s.loc.x);
+          int h = Math.abs(y - s.loc.y);
+          s.resize(w, h);
+      }
+      public void released(int x, int y){
+          firstPressed.set(x, y);
+      }
+    };
+
     public static Square.List theList = new Square.List();
+
+    static{
+        theList.add(backgroundSquare);
+        backgroundSquare.size.set(3000, 3000);
+        backgroundSquare.c = Color.white;
+    }
+
+    public static G.V mousePosition = new G.V(0,0);
+
     static G.V firstPressed = new G.V(0, 0);
+
+    public static I.Area currentArea;
 
 
     public void paintComponent(Graphics g){
@@ -45,39 +75,50 @@ public class Squares extends Window implements ActionListener {
 //        if (theVS.hit(me.getX(), me.getY())){
 //            theColor = G.rndColor();
 //        }
-        firstPressed.set(me.getX(), me.getY());
-
-        theSquare = new Square(me.getX(), me.getY());
         int x = me.getX(), y = me.getY();
-        theSquare = theList.hit(x, y);
-//        theSquare == null ? dragging = false : dragging = true;
-        if (theSquare == null){
-            dragging = false;
-            theList.add(new Square(me.getX(), me.getY()));
-        } else {
-            dragging= true;
-            theSquare.dv.set(0, 0);
-        }
+
+        firstPressed.set(x, y);
+
+        currentArea = theList.hit(x, y);
+
+        currentArea.pressed(x, y);
+//        theSquare = new Square(me.getX(), me.getY());
+//        int x = me.getX(), y = me.getY();
+//        theSquare = theList.hit(x, y);
+////        theSquare == null ? dragging = false : dragging = true;
+//        if (theSquare == null){
+//            dragging = false;
+//            theList.add(new Square(me.getX(), me.getY()));
+//        } else {
+//            dragging= true;
+//            theSquare.dv.set(0, 0);
+//        }
         repaint();
     }
 
     @Override
     public void mouseDragged(MouseEvent me){
+
         int x = me.getX(), y = me.getY();
+
+        currentArea.dragged(x, y);
 //        s.resize((x - s.loc.x) > 0 ? x - s.loc.x : 0, (y - s.loc.y) > 0 ?  x - s.loc.y : 0);
-        if (dragging){
-            theSquare.loc.x = x; theSquare.loc.y = y;
-        } else {
-            Square s = theList.get(theList.size()-1);
-            s.resize(Math.abs(x - s.loc.x), Math.abs(y - s.loc.y));
-        }
+//        if (dragging){
+//            theSquare.loc.x = x; theSquare.loc.y = y;
+//        } else {
+//            Square s = theList.get(theList.size()-1);
+//            s.resize(Math.abs(x - s.loc.x), Math.abs(y - s.loc.y));
+//        }
         repaint();
     }
 
     public void mouseReleased(MouseEvent me) {
-        if (dragging) {
-            theSquare.dv.set(me.getX() - firstPressed.x, me.getY() - firstPressed.y);
-        }
+        int x = me.getX(), y = me.getY();
+        currentArea.released(x, y);
+
+//        if (dragging) {
+//            theSquare.dv.set(me.getX() - firstPressed.x, me.getY() - firstPressed.y);
+//        }
     }
 
     @Override
@@ -85,7 +126,8 @@ public class Squares extends Window implements ActionListener {
         repaint();
     }
 
-    public static class Square extends G.VS{
+
+    public static class Square extends G.VS implements I.Area {
         public Color c = G.rndColor();
         //create velocity of the square to have animated effect
         public G.V dv = new G.V(G.rnd(20) - 10, G.rnd(20) - 10);
@@ -94,6 +136,7 @@ public class Squares extends Window implements ActionListener {
 
         //move things around
         public void draw(Graphics g){this.fill(g, c); moveAndBounce();}
+
 
         //when hit border, bounce back
         // when hit on top and bottom, x same, y opposite
@@ -107,6 +150,23 @@ public class Squares extends Window implements ActionListener {
             if (hix() > 1000 && dv.x > 0) {dv.x = -dv.x;}
             if (hiy() > 800 && dv.y > 0){dv.y = -dv.y;}
         }
+
+
+        public void pressed(int x, int y){
+            theSquare.dv.set(0, 0);
+            mousePosition.x = x - theSquare.loc.x;
+            mousePosition.y = y - theSquare.loc.y;
+        }
+
+        public void dragged(int x, int y){
+            theSquare.loc.x = x - mousePosition.x;
+            theSquare.loc.y = y - mousePosition.y;
+        }
+
+        public void released(int x, int y){
+            theSquare.dv.set(x - firstPressed.x, y - firstPressed.y);
+        }
+
         public static class List extends ArrayList<Square> {
             public void draw(Graphics g){for(Square s: this){s.draw(g);}}
             public Square hit(int x, int y){

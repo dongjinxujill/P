@@ -79,8 +79,8 @@ public class Squares extends Window implements ActionListener {
 
         firstPressed.set(x, y);
 
-        currentArea = theList.hit(x, y);
-
+        theSquare = theList.hit(x, y);
+        currentArea = theSquare;
         currentArea.pressed(x, y);
 //        theSquare = new Square(me.getX(), me.getY());
 //        int x = me.getX(), y = me.getY();

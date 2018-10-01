@@ -6,5 +6,6 @@ public interface UC {
     public static int screenWidth = 1000;
 
     public static int inkBufferMax = 800;
+    public static int normSampleSize = 25;
 
 }

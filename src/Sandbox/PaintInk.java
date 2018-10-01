@@ -17,14 +17,14 @@ public class PaintInk extends Window {
         G.fillBackground(g, Color.white);
 
         g.setColor(Color.red); g.fillRect(100, 100, 100, 100);
-
+        g.drawString("points: ", Ink.BUFFER.n, 600);
         inkList.show(g);
 
         Ink.BUFFER.show(g);
     }
 
-    public void mousePressed(MouseEvent me){Ink.BUFFER.pressed(me.getX(), me.getY()); repaint();}
-    public void mouseDragged(MouseEvent me){Ink.BUFFER.dragged(me.getX(), me.getY()); repaint();}
+    public void mousePressed(MouseEvent me){Ink.BUFFER.dn(me.getX(), me.getY()); repaint();}
+    public void mouseDragged(MouseEvent me){Ink.BUFFER.drag(me.getX(), me.getY()); repaint();}
     public void mouseReleased(MouseEvent me){inkList.add(new Ink()); repaint();}
 
 }

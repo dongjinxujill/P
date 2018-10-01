@@ -28,7 +28,7 @@ public class Squares extends Window implements ActionListener {
     public static Square theSquare = new Square(200, 328);
 
     public static Square backgroundSquare = new Square(0, 0){
-      @Override
+//      @Override
       public void pressed(int x, int y){
           theList.add(new Square(x, y));
       }
@@ -81,7 +81,7 @@ public class Squares extends Window implements ActionListener {
 
         theSquare = theList.hit(x, y);
         currentArea = theSquare;
-        currentArea.pressed(x, y);
+        currentArea.dn(x, y);
 //        theSquare = new Square(me.getX(), me.getY());
 //        int x = me.getX(), y = me.getY();
 //        theSquare = theList.hit(x, y);
@@ -101,7 +101,7 @@ public class Squares extends Window implements ActionListener {
 
         int x = me.getX(), y = me.getY();
 
-        currentArea.dragged(x, y);
+        currentArea.drag(x, y);
 //        s.resize((x - s.loc.x) > 0 ? x - s.loc.x : 0, (y - s.loc.y) > 0 ?  x - s.loc.y : 0);
 //        if (dragging){
 //            theSquare.loc.x = x; theSquare.loc.y = y;
@@ -114,7 +114,7 @@ public class Squares extends Window implements ActionListener {
 
     public void mouseReleased(MouseEvent me) {
         int x = me.getX(), y = me.getY();
-        currentArea.released(x, y);
+        currentArea.release(x, y);
 
 //        if (dragging) {
 //            theSquare.dv.set(me.getX() - firstPressed.x, me.getY() - firstPressed.y);
@@ -152,18 +152,18 @@ public class Squares extends Window implements ActionListener {
         }
 
 
-        public void pressed(int x, int y){
+        public void dn(int x, int y){
             theSquare.dv.set(0, 0);
             mousePosition.x = x - theSquare.loc.x;
             mousePosition.y = y - theSquare.loc.y;
         }
 
-        public void dragged(int x, int y){
+        public void drag(int x, int y){
             theSquare.loc.x = x - mousePosition.x;
             theSquare.loc.y = y - mousePosition.y;
         }
 
-        public void released(int x, int y){
+        public void release(int x, int y){
             theSquare.dv.set(x - firstPressed.x, y - firstPressed.y);
         }
 

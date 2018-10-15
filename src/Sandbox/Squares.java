@@ -163,6 +163,11 @@ public class Squares extends Window implements ActionListener {
             theSquare.loc.y = y - mousePosition.y;
         }
 
+        @Override
+        public void up(int x, int y) {
+
+        }
+
         public void release(int x, int y){
             theSquare.dv.set(x - firstPressed.x, y - firstPressed.y);
         }

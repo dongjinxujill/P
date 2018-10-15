@@ -11,4 +11,5 @@ public interface UC {
     public static int noMatchDist = 500000;//based on norm sample size and norm coordmax
     public static int dotThreshold = 5;
     public static String shapeDBFileName = "/Users/TOKYO/IdeaProjects/P/ShapeDB.bin";
+    public static int noBid = 10000;
 }

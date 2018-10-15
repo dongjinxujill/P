@@ -7,5 +7,8 @@ public interface UC {
 
     public static int inkBufferMax = 800;
     public static int normSampleSize = 25;
-
+    public static int normCoordMax = 500;
+    public static int noMatchDist = 500000;//based on norm sample size and norm coordmax
+    public static int dotThreshold = 5;
+    public static String shapeDBFileName = "/Users/TOKYO/IdeaProjects/P/ShapeDB.bin";
 }

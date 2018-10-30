@@ -12,4 +12,8 @@ public interface UC {
     public static int dotThreshold = 5;
     public static String shapeDBFileName = "/Users/TOKYO/IdeaProjects/P/ShapeDB.bin";
     public static int noBid = 10000;
+    public static int defaultStaffLineSpace = 8;
+    public static int barToMarginSnap = 20;
+    public static int defaultStaffH = 8;
+    public static String FontName = "sinfonia";
 }

@@ -49,7 +49,7 @@ public class Shape implements Serializable {
     public static Collection<Shape> LIST = DB.values();
 
     public static Database loadDB(){
-        Database  res = new Database();
+        Database  res;
 //        res.put("DOT", new Shape("DOT"));
 //        res.put("1", new Shape("1"));
         try{
@@ -67,6 +67,7 @@ public class Shape implements Serializable {
     public static void saveDB(){
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(UC.shapeDBFileName));
+            oos.writeObject(DB);
         } catch(Exception e){
             System.out.println(e);
         }
@@ -83,12 +84,21 @@ public class Shape implements Serializable {
             int d = s.prototypes.bestDist(ink.norm);
             if (d < bestSoFar){bestSoFar = d; bestMatched = s;}
         }
-
+        System.out.println("Saw "+ (bestMatched == null ? "null" :bestMatched.name));
         return bestMatched;
     }
 
     public static class Prototype extends Ink.Norm implements Serializable{
         public int nBlends = 1;//noise inside prototypes, trick for doing a running average
+
+
+        public void blend(Ink.Norm norm){
+            //normalize each thing
+            for (int i = 0; i < N; i++){
+                points[i].blend(norm.points[i], nBlends);
+            }
+            nBlends++;
+        }
 
         public static class List extends ArrayList<Prototype> implements I.Show, Serializable{//compare list prototype for norms coming in
 
@@ -127,12 +137,6 @@ public class Shape implements Serializable {
         }
 
 
-        public void blend(Ink.Norm norm){
-            //normalize each thing
-            for (int i = 0; i < N; i++){
-                points[i].blend(norm.points[i], nBlends);
-            }
-            nBlends++;
-        }
+
     }
 }

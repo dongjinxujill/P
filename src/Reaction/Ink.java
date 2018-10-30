@@ -30,7 +30,7 @@ public class Ink implements I.Show{
             for(int i = 0;i<K;i++){pl.points[i].set(points[i*(n-1)/(K-1)]);}
         }
         @Override //--I.Show interface
-        public void show(Graphics g){this.drawN(g, n); bbox.draw(g);}// draw the n points as a line.
+        public void show(Graphics g){this.drawN(g, n);}// draw the n points as a line.
         @Override //--I.Area interface
         public boolean hit(int x, int y){return true;} // any point COULD go into ink
         public void dn(int x, int y){clear(); bbox.set(x,y); add(x,y);} // add first point

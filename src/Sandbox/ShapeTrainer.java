@@ -51,6 +51,7 @@ public class ShapeTrainer extends Window {
         if (c == 10 || c == 13){
             currentName = "";
             Shape.saveDB();
+            System.out.println("saved for DB");
         }
         setStatus();
         repaint();

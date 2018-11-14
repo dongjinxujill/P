@@ -21,13 +21,6 @@ public class PaintInk extends Window {
         inkList.show(g);
         pList.show(g);
         Ink.BUFFER.show(g);
-//        if (Ink.BUFFER.n > 0){
-//            Ink.Norm norm = new Ink.Norm();
-//            norm.drawAt(g, new G.VS(500, 30, 100, 100));
-//            norm.drawAt(g, new G.VS(50, 200, 200, 200));
-//        }
-//        g.setColor(Color.red); g.fillRect(100, 100, 100, 100);
-//        g.drawString("points: "+Ink.BUFFER.n, 600,30);
         g.drawString(recognized, 700, 400);
     }
 
@@ -37,16 +30,6 @@ public class PaintInk extends Window {
         Ink ink = new Ink();
         Shape s = Shape.recognize(ink);
         recognized = "Recognized: " + ((s == null) ? "UNKNOWN" : s.name);
-//        inkList.add(ink);
-//        Shape.Prototype proto;
-//        if (pList.bestDist(ink.norm) < UC.noMatchDist){
-//            Shape.Prototype.List.bestMatch.blend(ink.norm);
-//            proto = Shape.Prototype.List.bestMatch;
-//        }else{
-//            proto = new Shape.Prototype();
-//            pList.add(proto);
-//        }
-//        ink.norm = proto;
         repaint();
     }
 

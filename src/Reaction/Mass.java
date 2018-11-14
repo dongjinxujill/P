@@ -13,10 +13,9 @@ public abstract class Mass extends Reaction.List implements I.Show {
             this.layer.add(this);
         }
     }
-    public void delete(){
+    public void deleteMass(){
         this.layer.remove(this);
-        clearAll();//mass self is a reaction list, clearall() is the function we wrote in the reaction
-        //when we delete a single mass, we need to clean it in other place as well
+        clearAll();//clears everything in the Reaction list of the mass
     }
 
 }

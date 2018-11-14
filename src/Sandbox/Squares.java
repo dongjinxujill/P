@@ -29,16 +29,16 @@ public class Squares extends Window implements ActionListener {
 
     public static Square backgroundSquare = new Square(0, 0){
 //      @Override
-      public void pressed(int x, int y){
+        public void dn(int x, int y){
           theList.add(new Square(x, y));
       }
-      public void dragged(int x, int y){
-          Square s = theList.get(theList.size() - 1);
-          int w = Math.abs(x - s.loc.x);
-          int h = Math.abs(y - s.loc.y);
-          s.resize(w, h);
-      }
-      public void released(int x, int y){
+        public void dragged(int x, int y){
+              Square s = theList.get(theList.size() - 1);
+              int w = Math.abs(x - s.loc.x);
+              int h = Math.abs(y - s.loc.y);
+              s.resize(w, h);
+          }
+        public void up(int x, int y){
           firstPressed.set(x, y);
       }
     };
@@ -59,7 +59,7 @@ public class Squares extends Window implements ActionListener {
 
 
     public void paintComponent(Graphics g){
-        G.fillBackground(g, Color.white);
+//        G.fillBackground(g, Color.white);
         // set color to be consistent in order to adjust to diff systems
 //        g.setColor(Color.blue);
 //      g.fillRect(100, 100, 200, 300);
@@ -72,27 +72,11 @@ public class Squares extends Window implements ActionListener {
 
 //    @Override
     public void mousePressed(MouseEvent me){
-//        if (theVS.hit(me.getX(), me.getY())){
-//            theColor = G.rndColor();
-//        }
         int x = me.getX(), y = me.getY();
-
         firstPressed.set(x, y);
-
         theSquare = theList.hit(x, y);
         currentArea = theSquare;
         currentArea.dn(x, y);
-//        theSquare = new Square(me.getX(), me.getY());
-//        int x = me.getX(), y = me.getY();
-//        theSquare = theList.hit(x, y);
-////        theSquare == null ? dragging = false : dragging = true;
-//        if (theSquare == null){
-//            dragging = false;
-//            theList.add(new Square(me.getX(), me.getY()));
-//        } else {
-//            dragging= true;
-//            theSquare.dv.set(0, 0);
-//        }
         repaint();
     }
 
@@ -102,23 +86,12 @@ public class Squares extends Window implements ActionListener {
         int x = me.getX(), y = me.getY();
 
         currentArea.drag(x, y);
-//        s.resize((x - s.loc.x) > 0 ? x - s.loc.x : 0, (y - s.loc.y) > 0 ?  x - s.loc.y : 0);
-//        if (dragging){
-//            theSquare.loc.x = x; theSquare.loc.y = y;
-//        } else {
-//            Square s = theList.get(theList.size()-1);
-//            s.resize(Math.abs(x - s.loc.x), Math.abs(y - s.loc.y));
-//        }
         repaint();
     }
 
     public void mouseReleased(MouseEvent me) {
         int x = me.getX(), y = me.getY();
-        currentArea.release(x, y);
-
-//        if (dragging) {
-//            theSquare.dv.set(me.getX() - firstPressed.x, me.getY() - firstPressed.y);
-//        }
+        currentArea.up(x, y);
     }
 
     @Override
@@ -150,7 +123,7 @@ public class Squares extends Window implements ActionListener {
             if (hix() > 1000 && dv.x > 0) {dv.x = -dv.x;}
             if (hiy() > 800 && dv.y > 0){dv.y = -dv.y;}
         }
-
+        public void resize(int x,int y){size.x = x;size.y = y;}
 
         public void dn(int x, int y){
             theSquare.dv.set(0, 0);

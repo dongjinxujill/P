@@ -3,6 +3,8 @@ package GraphicsLib;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.Random;
+import java.rmi.activation.ActivationGroup_Stub;
+
 
 
 
@@ -12,7 +14,7 @@ public class G{
     public static Color rndColor(){return new Color(rnd(256),rnd(256),rnd(256)); }
     public static void fillBackground(Graphics g, Color c){g.setColor(c); g.fillRect(0,0,3000,3000);}
     public static void drawCircle(Graphics g, int x, int y, int r){g.drawOval(x-r,y-r,r+r,r+r);}
-
+    // 2-D vectors
     public static class V implements Serializable {
         public int x,y;
 
@@ -98,7 +100,7 @@ public class G{
             for(int i = 1; i < n; i++) {
                 g.drawLine(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
             }
-            drawNDots(g,n);
+//            drawNDots(g,n);
         }
         public void drawNDots(Graphics g, int n){
             g.setColor(Color.RED);

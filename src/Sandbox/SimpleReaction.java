@@ -67,10 +67,11 @@ public class SimpleReaction extends Window {
         public Color c = G.rndColor();
         public Box(G.VS vs){
             super("BACK");
+            this.vs = vs;
             addReaction(new Reaction("S-S"){
                 @Override
-                public void act(Gesture gesture) {
-                    Box.this.delete();
+                public void act(Gesture g) {
+                    Box.this.deleteMass();
                 }
                 @Override
                 public int bid(Gesture gesture){
@@ -102,10 +103,6 @@ public class SimpleReaction extends Window {
             });
 
         }
-
-//        public void delete(Gesture gesture) {
-//            Box.this.delete(gesture);
-//        }
 
         @Override
         public void show(Graphics g) {

@@ -9,9 +9,7 @@ public abstract class Reaction implements I.React{
     public static List initialReactions = new List();
     public static I.Act initialAction = new I.Act(){
         @Override
-        public void act(Gesture gesture) {
-
-        }
+        public void act(Gesture gesture) {}
     };
     private static Map byShapeMap = new Map();
     public Reaction(String shapeName){
@@ -46,17 +44,14 @@ public abstract class Reaction implements I.React{
     public static class List extends ArrayList<Reaction> {
         public void addReaction(Reaction r){
             this.add(r);
-//            byShapeMap.addReaction(r);
             r.enable();
         }
         public void removeReaction(Reaction r){
             this.remove(r);
-//            byShapeMap.removeReaction(r);
             r.disable();
         }
         public void clearAll(){
             for (Reaction r : this){
-//                byShapeMap.removeReaction(r);
                 r.disable();
             }
             this.clear();
@@ -93,13 +88,6 @@ public abstract class Reaction implements I.React{
 
             return res;
         }
-//        public void addReaction(Reaction r){
-//            byShapeMap.getList(r.shape).add(r);
-//        }
-//
-//        public void removeReaction(Reaction r){
-//            byShapeMap.getList(r.shape).remove(r);
-//        }
     }
 
 

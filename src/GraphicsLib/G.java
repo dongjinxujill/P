@@ -14,6 +14,19 @@ public class G{
     public static Color rndColor(){return new Color(rnd(256),rnd(256),rnd(256)); }
     public static void fillBackground(Graphics g, Color c){g.setColor(c); g.fillRect(0,0,3000,3000);}
     public static void drawCircle(Graphics g, int x, int y, int r){g.drawOval(x-r,y-r,r+r,r+r);}
+
+    public static Polygon poly = new Polygon();
+    public static void pSpline(int xA, int yA, int xB, int yB, int xC, int yC, int n){
+        if (n == 0){
+            poly.addPoint(xA, yA);
+            poly.addPoint(xC, xB);
+            return;
+        }
+
+        int xAB = (xA + xB)/2, yAB = (yA + yB)/2, xBC = (xB + xC)/2, yBC = (yB + yC)/2, xABC = (xA + xB + xC)/2, yABC = (yA + yB + yC)/2;
+        pSpline(xA, yA, xAB, yAB, xABC, yABC, n-1);
+        pSpline(xABC, yABC, xBC, yBC, xC, yC, n-1);
+    }
     // 2-D vectors
     public static class V implements Serializable {
         public int x,y;

@@ -1,8 +1,10 @@
 package GraphicsLib;
 
+import Music.Sys;
 import Reaction.Gesture;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public interface I {
     public interface Show {
@@ -23,5 +25,32 @@ public interface I {
     public interface React extends Act{
         public int bid(Gesture gesture);
 
+    }
+
+    interface Margin {
+
+        int top();
+
+        int bot();
+
+        int left();
+
+        int right();
+    }
+
+    interface Page extends Margin {
+
+        Sys.Fmt sysFmt();
+
+        ArrayList<Sys> systems();
+    }
+
+    interface MusicApp {
+
+        ArrayList<Page> pages();
+
+        Sys.Fmt sysfmt(Page page);
+
+        ArrayList<Sys> systems(Page page);
     }
 }
